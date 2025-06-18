@@ -1,0 +1,6 @@
+person_form:
+  js:
+    js/person-form.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

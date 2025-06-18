@@ -42,8 +42,14 @@ final class PersonForm extends EntityForm {
     ];
 
     $form['label'] = [
-      '#type' => 'value',
-      '#value' => $person->label(),
+      '#type' => 'textfield',
+      // '#title' => '',
+      '#default_value' => $person->label(),
+      '#attributes' => [
+        'style' => 'display: none;',
+        'data-person-label' => 'true',
+      ],
+      '#required' => FALSE,
     ];
 
     $form['id'] = [
@@ -51,11 +57,12 @@ final class PersonForm extends EntityForm {
       '#default_value' => $person->id(),
       '#machine_name' => [
         'exists' => [Person::class, 'load'],
-        'source' => ['first_name', 'last_name'],
-        'replace_pattern' => '[^a-z0-9_]+',
-        'replace' => '_',
+        'source' => ['label'],
       ],
       '#disabled' => !$person->isNew(),
+      '#attached' => [
+        'library' => ['custom_module/person_form'],
+      ],
     ];
 
     return $form;
