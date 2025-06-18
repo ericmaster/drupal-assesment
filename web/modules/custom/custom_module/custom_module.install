@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the custom_module module.
+ */
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Implements hook_install().
+ */
+function custom_module_install(): void {
+  // Verbose output for CLI.
+  if (PHP_SAPI === 'cli') {
+    printf("Creating article subtitle field...\n");
+  }
+  // Create the subtitle field storage.
+  $field_storage = FieldStorageConfig::create([
+    'field_name' => 'field_subtitle',
+    'entity_type' => 'node',
+    'type' => 'string',
+    'cardinality' => 1,
+    'settings' => [
+      'max_length' => 255,
+    ],
+  ]);
+  $field_storage->save();
+
+  // Create the subtitle field instance for Article content type.
+  $field = FieldConfig::create([
+    'field_storage' => $field_storage,
+    'bundle' => 'article',
+    'label' => 'Subtitle',
+    'description' => 'Enter a subtitle for this article.',
+    'required' => FALSE,
+    'settings' => [],
+  ]);
+  $field->save();
+
+  // Configure the form display.
+  /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
+  $form_display = \Drupal::entityTypeManager()
+    ->getStorage('entity_form_display')
+    ->load('node.article.default');
+
+  if ($form_display) {
+    $form_display->setComponent('field_subtitle', [
+      'type' => 'string_textfield',
+      'weight' => 1,
+      'settings' => [
+        'size' => 60,
+        'placeholder' => '',
+      ],
+    ])->save();
+  }
+
+  // Configure the view display with our custom formatter.
+  /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
+  $view_display = \Drupal::entityTypeManager()
+    ->getStorage('entity_view_display')
+    ->load('node.article.default');
+
+  if ($view_display) {
+    $view_display->setComponent('field_subtitle', [
+      'type' => 'uppercase_text',
+      'weight' => 1,
+      'label' => 'above',
+      'settings' => [],
+    ])->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function custom_module_uninstall(): void {
+  // Verbose output for CLI.
+  if (PHP_SAPI === 'cli') {
+    printf("Deleting article subtitle field...\n");
+  }
+  // Remove the subtitle field from Article content type.
+  $field = FieldConfig::loadByName('node', 'article', 'field_subtitle');
+  if ($field) {
+    $field->delete();
+  }
+
+  // Remove the field storage.
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_subtitle');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+}
