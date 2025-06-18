@@ -1,5 +1,10 @@
 name: Custom Module
-description: 'Provides a simple greeting functionality with personalized message.'
+description: 'Provides greeting functionality, person configuration management, field formatters, and custom normalizers.'
 type: module
 core_version_requirement: ^11
 package: Custom
+dependencies:
+  - drupal:system
+  - drupal:serialization
+  - drupal:rest
+  - drupal:views

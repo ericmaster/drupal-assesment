@@ -1,0 +1,89 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - rest
+    - serialization
+    - user
+id: custom_module_node_rest
+label: 'Custom Module Node REST'
+module: views
+description: 'REST view to validate custom node normalizer with velir attribute.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: 0
+    display_options:
+      title: 'Custom Module Node REST'
+      fields:
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          plugin_id: field
+          label: ID
+          exclude: false
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          plugin_id: field
+          label: Title
+          exclude: false
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          value: '1'
+          expose:
+            operator_id: ''
+      sorts:
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          plugin_id: date
+          order: DESC
+      pager:
+        type: mini
+        options:
+          items_per_page: 10
+          offset: 0
+      style:
+        type: default
+      row:
+        type: fields
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+  rest_export_1:
+    id: rest_export_1
+    display_title: 'REST export'
+    display_plugin: rest_export
+    position: 1
+    display_options:
+      style:
+        type: serializer
+        options:
+          formats:
+            json: json
+            xml: xml
+      row:
+        type: data_entity
+      path: api/nodes
+      pager:
+        type: some
+        options:
+          items_per_page: 10
+          offset: 0

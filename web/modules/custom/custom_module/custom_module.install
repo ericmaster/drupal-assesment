@@ -102,6 +102,17 @@ function custom_module_uninstall(): void {
   if ($block) {
     $block->delete();
   }
+
+  // Remove the custom REST view if it exists.
+  $view = \Drupal::entityTypeManager()
+    ->getStorage('view')
+    ->load('custom_module_node_rest');
+  if ($view) {
+    $view->delete();
+    if (PHP_SAPI === 'cli') {
+      printf("REST view removed.\n");
+    }
+  }
 }
 
 /**

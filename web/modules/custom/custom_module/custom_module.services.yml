@@ -1,0 +1,9 @@
+services:
+  custom_module.node_normalizer:
+    class: Drupal\custom_module\Normalizer\NodeNormalizer
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_type.repository'
+      - '@entity_field.manager'
+    tags:
+      - { name: normalizer, priority: 10 }
