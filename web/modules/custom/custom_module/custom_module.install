@@ -70,6 +70,9 @@ function custom_module_install(): void {
       'settings' => [],
     ])->save();
   }
+
+  // Place the User Status Block in the active theme.
+  _custom_module_place_user_status_block();
 }
 
 /**
@@ -90,5 +93,61 @@ function custom_module_uninstall(): void {
   $field_storage = FieldStorageConfig::loadByName('node', 'field_subtitle');
   if ($field_storage) {
     $field_storage->delete();
+  }
+
+  // Remove the User Status Block.
+  $block = \Drupal::entityTypeManager()
+    ->getStorage('block')
+    ->load('custom_module_user_status');
+  if ($block) {
+    $block->delete();
+  }
+}
+
+/**
+ * Helper function to place the User Status Block in the active theme.
+ */
+function _custom_module_place_user_status_block(): void {
+  // Verbose output for CLI.
+  if (PHP_SAPI === 'cli') {
+    printf("Placing user status block...\n");
+  }
+  $theme_handler = \Drupal::service('theme_handler');
+  $default_theme = $theme_handler->getDefault();
+
+  // Try to place in header region, fallback to sidebar_first, then content
+  $regions_to_try = ['header', 'sidebar_first', 'content'];
+
+  foreach ($regions_to_try as $region) {
+    $theme_regions = system_region_list($default_theme, REGIONS_VISIBLE);
+    if (isset($theme_regions[$region])) {
+      $block_id = 'custom_module_user_status';
+
+      // Check if block already exists
+      $existing_block = \Drupal::entityTypeManager()
+        ->getStorage('block')
+        ->load($block_id);
+
+      if (!$existing_block) {
+        \Drupal\block\Entity\Block::create([
+          'id' => $block_id,
+          'theme' => $default_theme,
+          'region' => $region,
+          'plugin' => 'custom_module_user_status',
+          'weight' => -10,
+          'status' => TRUE,
+          'visibility' => [],
+          'settings' => [
+            'label' => 'User Status',
+            'label_display' => '0',
+          ],
+        ])->save();
+
+        if (PHP_SAPI === 'cli') {
+          printf("User Status Block placed in %s region of %s theme.\n", $region, $default_theme);
+        }
+      }
+      break; // Stop after successfully placing in first available region
+    }
   }
 }

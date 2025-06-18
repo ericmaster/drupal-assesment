@@ -4,3 +4,10 @@ person_form:
   dependencies:
     - core/jquery
     - core/drupal
+
+user_status_block:
+  css:
+    theme:
+      css/user-status-block.css: {}
+  dependencies:
+    - core/drupal
