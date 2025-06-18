@@ -19,6 +19,16 @@ custom_module.greeting_json:
   options:
     _format: 'json'
 
+custom_module.admin_greeting:
+  path: '/hello-velir-3/{name}'
+  defaults:
+    _controller: 'Drupal\custom_module\Controller\HelloControllerAdmin::adminGreeting'
+    _title: 'Admin Greeting'
+    name: 'Eric'
+  requirements:
+    _role: 'administrator'
+    name: '[a-zA-Z]+'
+
 entity.person.collection:
   path: '/admin/structure/person'
   defaults:
