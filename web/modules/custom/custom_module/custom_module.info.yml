@@ -1,0 +1,5 @@
+name: Custom Module
+description: 'Provides a simple greeting functionality with personalized message.'
+type: module
+core_version_requirement: ^11
+package: Custom

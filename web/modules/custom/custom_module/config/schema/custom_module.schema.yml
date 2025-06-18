@@ -1,0 +1,19 @@
+
+custom_module.person.*:
+  type: config_entity
+  label: Person
+  mapping:
+    id:
+      type: string
+      label: ID
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+    first_name:
+      type: string
+      label: 'First Name'
+    last_name:
+      type: string
+      label: 'Last Name'

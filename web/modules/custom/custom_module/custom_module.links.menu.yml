@@ -1,0 +1,5 @@
+entity.person.overview:
+  title: Persons
+  parent: system.admin_structure
+  description: 'Manage person configurations with first and last names.'
+  route_name: entity.person.collection

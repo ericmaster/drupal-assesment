@@ -1,0 +1,52 @@
+custom_module.greeting:
+  path: '/hello-velir-1/{name}'
+  defaults:
+    _controller: 'Drupal\custom_module\Controller\HelloController::greeting'
+    _title: 'Greeting'
+    name: 'Eric'
+  requirements:
+    _permission: 'access content'
+    name: '[a-zA-Z]+'
+
+custom_module.greeting_json:
+  path: '/hello-velir-2/{name}'
+  defaults:
+    _controller: 'Drupal\custom_module\Controller\HelloControllerJson::greetingJson'
+    name: 'Eric'
+  requirements:
+    _permission: 'access content'
+    name: '[a-zA-Z]+'
+  options:
+    _format: 'json'
+
+entity.person.collection:
+  path: '/admin/structure/person'
+  defaults:
+    _entity_list: 'person'
+    _title: 'Person configuration'
+  requirements:
+    _permission: 'administer person'
+
+entity.person.add_form:
+  path: '/admin/structure/person/add'
+  defaults:
+    _entity_form: 'person.add'
+    _title: 'Add a person'
+  requirements:
+    _permission: 'administer person'
+
+entity.person.edit_form:
+  path: '/admin/structure/person/{person}'
+  defaults:
+    _entity_form: 'person.edit'
+    _title: 'Edit a person'
+  requirements:
+    _permission: 'administer person'
+
+entity.person.delete_form:
+  path: '/admin/structure/person/{person}/delete'
+  defaults:
+    _entity_form: 'person.delete'
+    _title: 'Delete a person'
+  requirements:
+    _permission: 'administer person'
