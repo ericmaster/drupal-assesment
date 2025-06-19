@@ -25,10 +25,6 @@ jobs:
 
       - name: Start DDEV and install Drupal
         run: |
-          ddev config --project-type=drupal11 --docroot=web --create-docroot
-          ddev start
-          ddev composer create "drupal/recommended-project:^11" --no-interaction
-          ddev config --project-type=drupal11 --docroot=web --create-docroot --no-interaction
           ddev start
           ddev composer install
           ddev drush site:install standard --account-name=admin --account-pass=admin --site-name="Drupal Assessment" --yes
