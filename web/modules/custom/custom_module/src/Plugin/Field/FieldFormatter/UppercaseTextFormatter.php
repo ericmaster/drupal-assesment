@@ -76,12 +76,12 @@ class UppercaseTextFormatter extends FormatterBase {
    */
   public function settingsSummary(): array {
     $summary = [];
-    
+
     $trim_whitespace = $this->getSetting('trim_whitespace');
     $html_tag = $this->getSetting('html_tag');
 
     $summary[] = $this->t('HTML tag: @tag', ['@tag' => $html_tag]);
-    
+
     if ($trim_whitespace) {
       $summary[] = $this->t('Trim whitespace: Yes');
     }

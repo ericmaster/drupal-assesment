@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\custom_module\Kernel;
 
+use Drupal\custom_module\Controller\HelloControllerJson;
 use Drupal\KernelTests\KernelTestBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -36,7 +37,7 @@ class HelloControllerJsonTest extends KernelTestBase {
    */
   public function testJsonRouteReturnsJsonResponse(): void {
     // Instantiate the JSON controller directly.
-    $controller = new \Drupal\custom_module\Controller\HelloControllerJson();
+    $controller = new HelloControllerJson();
 
     // Execute the greetingJson method.
     $response = $controller->greetingJson();
@@ -63,7 +64,7 @@ class HelloControllerJsonTest extends KernelTestBase {
    */
   public function testJsonRouteWithCustomName(): void {
     // Instantiate the JSON controller directly.
-    $controller = new \Drupal\custom_module\Controller\HelloControllerJson();
+    $controller = new HelloControllerJson();
 
     // Execute the greetingJson method with a custom name.
     $response = $controller->greetingJson('John');

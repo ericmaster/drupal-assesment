@@ -46,7 +46,7 @@ class NodeNormalizer extends ContentEntityNormalizer {
   public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
     $data = parent::normalize($object, $format, $context);
 
-    // Add the custom "velir" attribute with value "212"
+    // Add the custom "velir" attribute with value "212".
     if (is_array($data)) {
       $data['velir'] = '212';
     }

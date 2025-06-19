@@ -82,7 +82,6 @@ class HelloControllerAdminTest extends BrowserTestBase {
    */
   public function testAnonymousUserAccessDenied(): void {
     // Don't log in any user (anonymous).
-
     // Visit the admin greeting route.
     $this->drupalGet('/hello-velir-3');
 
@@ -148,4 +147,5 @@ class HelloControllerAdminTest extends BrowserTestBase {
     // Assert that the custom greeting message appears.
     $this->assertSession()->pageTextContains('Hello, my name is ' . $custom_name . '.');
   }
+
 }

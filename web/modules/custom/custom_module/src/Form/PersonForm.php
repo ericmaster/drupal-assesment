@@ -78,7 +78,7 @@ final class PersonForm extends EntityForm {
     // Set the first and last name from form values.
     $person->setFirstName($form_state->getValue('first_name'));
     $person->setLastName($form_state->getValue('last_name'));
-    
+
     // Auto-populate the label with the full name.
     $full_name = trim($form_state->getValue('first_name') . ' ' . $form_state->getValue('last_name'));
     $person->set('label', $full_name);

@@ -20,7 +20,7 @@ class HelloControllerJson extends HelloController {
    */
   public function greetingJson(string $name = 'Eric'): JsonResponse {
     $message = $this->getGreetingMessage($name);
-    
+
     return new JsonResponse([
       'message' => $message->render(),
       'status' => 'success',

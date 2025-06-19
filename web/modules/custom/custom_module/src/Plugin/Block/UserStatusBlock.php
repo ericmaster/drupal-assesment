@@ -2,6 +2,7 @@
 
 namespace Drupal\custom_module\Plugin\Block;
 
+use Drupal\Core\Url;
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -40,7 +41,7 @@ class UserStatusBlock extends BlockBase implements ContainerFactoryPluginInterfa
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    AccountProxyInterface $current_user
+    AccountProxyInterface $current_user,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->currentUser = $current_user;
@@ -65,18 +66,18 @@ class UserStatusBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $build = [];
 
     if ($this->currentUser->isAnonymous()) {
-      // Anonymous user - show "Log In"
+      // Anonymous user - show "Log In".
       $build['content'] = [
         '#type' => 'link',
         '#title' => $this->t('Log In'),
-        '#url' => \Drupal\Core\Url::fromRoute('user.login'),
+        '#url' => Url::fromRoute('user.login'),
         '#attributes' => [
           'class' => ['user-status-login'],
         ],
       ];
     }
     else {
-      // Authenticated user - show welcome message
+      // Authenticated user - show welcome message.
       $username = $this->currentUser->getDisplayName();
       $build['content'] = [
         '#markup' => $this->t('Welcome, @username!', ['@username' => $username]),
@@ -85,7 +86,7 @@ class UserStatusBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ];
     }
 
-    // Add proper cache metadata
+    // Add proper cache metadata.
     $build['#cache'] = [
       'contexts' => [
         'user',
@@ -93,10 +94,11 @@ class UserStatusBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'tags' => [
         'user:' . $this->currentUser->id(),
       ],
-      'max-age' => 0, // Don't cache this block as user status can change
+      // Don't cache this block as user status can change.
+      'max-age' => 0,
     ];
 
-    // Attach CSS library
+    // Attach CSS library.
     $build['#attached']['library'][] = 'custom_module/user_status_block';
 
     return $build;
