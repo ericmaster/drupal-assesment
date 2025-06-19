@@ -1,0 +1,68 @@
+name: PHP Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  php-tests:
+    name: Validate Composer, Install Dependencies, and Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: db
+          MYSQL_USER: db
+          MYSQL_PASSWORD: db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mysql
+          ini-values: |
+            memory_limit=2G
+          coverage: none
+
+      # Validate composer.json and composer.lock
+      - name: Validate Composer Files
+        run: composer validate --strict
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+      # Set up Drupal environment variables
+      - name: Set Environment Variables
+        run: |
+          echo "SIMPLETEST_DB=mysql://db:db@127.0.0.1/db" >> $GITHUB_ENV
+          echo "SIMPLETEST_BASE_URL=http://127.0.0.1:8888" >> $GITHUB_ENV
+
+      # Start a PHP server for testing
+      - name: Start PHP Server
+        run: php -S 127.0.0.1:8888 -t web > /dev/null 2>&1 &
+
+      # Run PHPUnit tests
+      - name: Run PHPUnit Tests
+        run: |
+          vendor/bin/phpunit --configuration web/core/phpunit.xml.dist web/modules/custom/custom_module
