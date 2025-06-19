@@ -54,7 +54,7 @@ ddev start
 
 ## Testing
 
-* Execute `ddev ssh` to enter the container
+* Execute `ddev ssh` to enter the container or `ddev exec` followed by the command below
 * Then run the following command to execute the tests
 ```bash
 SIMPLETEST_DB='mysql://db:db@db/db' SIMPLETEST_BASE_URL=http://drupal-assessment.ddev.site vendor/bin/phpunit --configuration web/core/phpunit.xml.dist web/modules/custom/custom_module
