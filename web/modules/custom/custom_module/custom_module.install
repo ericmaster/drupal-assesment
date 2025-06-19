@@ -12,10 +12,24 @@ use Drupal\field\Entity\FieldStorageConfig;
  * Implements hook_install().
  */
 function custom_module_install(): void {
-  // Verbose output for CLI.
-  if (PHP_SAPI === 'cli') {
+  // Verbose output for CLI (but not during PHPUnit tests).
+  if (PHP_SAPI === 'cli' && !defined('PHPUNIT_COMPOSER_INSTALL')) {
     printf("Creating article subtitle field...\n");
   }
+
+  // Check if the article content type exists before creating fields.
+  $node_type = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->load('article');
+
+  if (!$node_type) {
+    // Article content type doesn't exist, skip field creation.
+    if (PHP_SAPI === 'cli' && !defined('PHPUNIT_COMPOSER_INSTALL')) {
+      printf("Article content type not found, skipping field creation.\n");
+    }
+    return;
+  }
+
   // Create the subtitle field storage.
   $field_storage = FieldStorageConfig::create([
     'field_name' => 'field_subtitle',
@@ -80,7 +94,7 @@ function custom_module_install(): void {
  */
 function custom_module_uninstall(): void {
   // Verbose output for CLI.
-  if (PHP_SAPI === 'cli') {
+  if (PHP_SAPI === 'cli' && !defined('PHPUNIT_COMPOSER_INSTALL')) {
     printf("Deleting article subtitle field...\n");
   }
   // Remove the subtitle field from Article content type.
@@ -109,7 +123,7 @@ function custom_module_uninstall(): void {
     ->load('custom_module_node_rest');
   if ($view) {
     $view->delete();
-    if (PHP_SAPI === 'cli') {
+    if (PHP_SAPI === 'cli' && !defined('PHPUNIT_COMPOSER_INSTALL')) {
       printf("REST view removed.\n");
     }
   }
@@ -120,7 +134,7 @@ function custom_module_uninstall(): void {
  */
 function _custom_module_place_user_status_block(): void {
   // Verbose output for CLI.
-  if (PHP_SAPI === 'cli') {
+  if (PHP_SAPI === 'cli' && !defined('PHPUNIT_COMPOSER_INSTALL')) {
     printf("Placing user status block...\n");
   }
   $theme_handler = \Drupal::service('theme_handler');
@@ -154,7 +168,7 @@ function _custom_module_place_user_status_block(): void {
           ],
         ])->save();
 
-        if (PHP_SAPI === 'cli') {
+        if (PHP_SAPI === 'cli' && !defined('PHPUNIT_COMPOSER_INSTALL')) {
           printf("User Status Block placed in %s region of %s theme.\n", $region, $default_theme);
         }
       }

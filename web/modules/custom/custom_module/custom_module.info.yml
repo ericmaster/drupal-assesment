@@ -5,6 +5,10 @@ core_version_requirement: ^11
 package: Custom
 dependencies:
   - drupal:system
+  - drupal:field
+  - drupal:text
+  - drupal:node
+  - drupal:block
   - drupal:serialization
   - drupal:rest
   - drupal:views
