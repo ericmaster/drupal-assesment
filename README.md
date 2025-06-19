@@ -1,3 +1,5 @@
+[![Drupal CI](https://github.com/ericmaster/drupal-assesment/actions/workflows/php.yml/badge.svg?branch=main&event=push)](https://github.com/ericmaster/drupal-assesment/actions/workflows/php.yml)
+
 # Drupal Assessment
 
 This repo was added to demonstrate some of the Drupal capabilities.
