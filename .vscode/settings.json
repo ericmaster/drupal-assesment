@@ -11,9 +11,7 @@
   "editor.wordWrapColumn": 80,
   "editor.wordWrap": "off",
   "editor.detectIndentation": true,
-  "editor.rulers": [
-    80
-  ],
+  "editor.rulers": [80],
   "files.associations": {
     "*.inc": "php",
     "*.module": "php",
@@ -33,9 +31,10 @@
   "telemetry.telemetryLevel": "off",
 
   /* PHP Intelephense (bmewburn.vscode-intelephense-client) */
+  "intelephense.format.braces": "k&r",
   "intelephense.environment.includePaths": [
     "core/",
     "core/includes",
     "../vendor/"
-  ],
+  ]
 }
