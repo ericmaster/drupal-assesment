@@ -26,13 +26,6 @@ class HelloControllerJsonTest extends KernelTestBase {
   ];
 
   /**
-   * {@inheritdoc}
-   */
-  protected function setUp(): void {
-    parent::setUp();
-  }
-
-  /**
    * Tests that the hello-velir-2 route returns a JSON response.
    */
   public function testJsonRouteReturnsJsonResponse(): void {

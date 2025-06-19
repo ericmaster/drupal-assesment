@@ -103,7 +103,7 @@ class HelloControllerAdminTest extends BrowserTestBase {
   }
 
   /**
-   * Tests that regular users receive a 403 for the admin greeting route with custom name.
+   * Test regular users receive a 403 for admin greeting route with custom name.
    */
   public function testRegularUserAccessDeniedWithCustomName(): void {
     $this->drupalLogin($this->webUser);
@@ -132,7 +132,7 @@ class HelloControllerAdminTest extends BrowserTestBase {
   }
 
   /**
-   * Tests that administrative users can access the admin greeting route with custom name.
+   * Tests admin users can access the admin greeting route with custom name.
    */
   public function testAdminUserAccessGrantedWithCustomName(): void {
     $this->drupalLogin($this->adminUser);

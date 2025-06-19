@@ -51,7 +51,7 @@ class NodeNormalizerTest extends KernelTestBase {
   }
 
   /**
-   * Tests that node serialization includes the "velir" attribute with value "212".
+   * Tests node serialization includes the "velir" attribute with value "212".
    */
   public function testNodeSerializationIncludesVelirAttribute(): void {
     // Create a test node.

@@ -29,6 +29,7 @@ class NodeNormalizer extends ContentEntityNormalizer {
    * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager
    *   The entity field manager.
    */
+  // phpcs:disable
   public function __construct(
     #[Autowire(service: 'entity_type.manager')]
     EntityTypeManagerInterface $entityTypeManager,
@@ -39,6 +40,7 @@ class NodeNormalizer extends ContentEntityNormalizer {
   ) {
     parent::__construct($entityTypeManager, $entityTypeRepository, $entityFieldManager);
   }
+  // phpcs:enable
 
   /**
    * {@inheritdoc}

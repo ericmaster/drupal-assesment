@@ -53,6 +53,7 @@ class UppercaseTextFormatter extends FormatterBase {
       '#title' => $this->t('HTML tag'),
       '#description' => $this->t('The HTML tag to wrap the uppercase text.'),
       '#default_value' => $this->getSetting('html_tag'),
+      // phpcs:disable
       '#options' => [
         'span' => 'span',
         'div' => 'div',
@@ -66,6 +67,7 @@ class UppercaseTextFormatter extends FormatterBase {
         'strong' => 'strong',
         'em' => 'em',
       ],
+      // phpcs:enable
     ];
 
     return $form;
