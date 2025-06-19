@@ -32,4 +32,4 @@ jobs:
           ddev drush cr
 
       - name: Run PHP CodeSniffer (phpcs)
-        run: ddev phpcs --standard=Drupal,DrupalPractice web/modules/custom
+        run: ddev exec phpcs --standard=Drupal,DrupalPractice web/modules/custom
