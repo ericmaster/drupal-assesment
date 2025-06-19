@@ -1,10 +1,18 @@
 # Drupal Assessment
 
+This repo was added to demonstrate some of the Drupal capabilities.
+
 ## Setup
+
+To view **locally**, clone the repo then execute
 
 ```
 ddev start
 ```
+
+The site should be accessible at http://drupal-assessment.ddev.site
+
+Also, an online **demo** version can be seen at http://drupal-assessment.ericmaster.ninja
 
 ## Usage
 
